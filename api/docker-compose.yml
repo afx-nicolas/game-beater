@@ -1,0 +1,25 @@
+services:
+  database:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:-gamebeater}
+      POSTGRES_USER: ${DATABASE_USER:-gamebeater}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-gamebeater}
+    ports:
+      - ${DATABASE_PORT:-5432}:5432
+    env_file:
+      - .env
+    volumes:
+      - ./var/database:/var/lib/postgresql/data:rw
+
+  backend:
+    build: .
+    ports:
+      - '${API_PORT:-3000}:3000'
+    depends_on:
+      - database
+    command: pnpm start:dev
+    volumes:
+      - .:/app
+    env_file:
+      - .env
