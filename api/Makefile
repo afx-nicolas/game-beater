@@ -23,13 +23,13 @@ create-folders: ## create needed folders
 	mkdir -p var
 
 install-dependencies: ## install dependencies using pnpm
-	docker compose run backend pnpm install
+	docker compose run backend corepack pnpm install
 
 up-d: ## up the container and detach
 	docker compose up -d
 
-pnpm: ## run pnpm
-	docker compose run backend pnpm $(filter-out $@,$(MAKECMDGOALS))
+pnpm: ## run pnpm e.g.: make pnpm "add -D eslint"
+	docker compose run backend corepack pnpm $(filter-out $@,$(MAKECMDGOALS))
 
 api-logs:
 	docker compose logs -f backend
