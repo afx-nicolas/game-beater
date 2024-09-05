@@ -7,6 +7,7 @@ RUN corepack enable
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
 WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
 
 FROM base AS prod-deps
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store corepack pnpm install --prod --frozen-lockfile
