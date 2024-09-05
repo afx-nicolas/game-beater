@@ -6,6 +6,12 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache git
+
+RUN git config --global --add safe.directory /app
+
 COPY . /app
 WORKDIR /app
 
@@ -19,5 +25,3 @@ RUN corepack pnpm run build
 FROM base
 COPY --from=prod-deps /app/node_modules /app/node_modules
 COPY --from=build /app/dist /app/dist
-
-CMD [ "pnpm", "dev" ]

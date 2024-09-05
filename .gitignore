@@ -18,6 +18,7 @@ node_modules/
 
 # app
 var/
+dist/
 
 # logs
 logs/
