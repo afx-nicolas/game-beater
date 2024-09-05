@@ -10,7 +10,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./var/database:/var/lib/postgresql/data:rw
+      - database_data:/var/lib/postgresql/data:rw
 
   backend:
     build: .
@@ -23,3 +23,5 @@ services:
       - .:/app
     env_file:
       - .env
+volumes:
+  database_data:

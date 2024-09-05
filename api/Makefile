@@ -7,6 +7,9 @@ help: ## show this help
 
 all: help
 
+build: ## build containers
+	docker compose build
+
 start: ## start the containers
 	docker compose start
 
@@ -19,17 +22,14 @@ down: ## down the containers
 create-env: ## copy the example env file
 	cp .env.example .env
 
-create-folders: ## create needed folders
-	mkdir -p var
-
 install-dependencies: ## install dependencies using pnpm
-	docker compose run backend corepack pnpm install
+	docker compose run --rm backend corepack pnpm install
 
 up-d: ## up the container and detach
-	docker compose up -d
+	docker compose up --build -d
 
 pnpm: ## run pnpm e.g.: make pnpm "add -D eslint"
-	docker compose run backend corepack pnpm $(filter-out $@,$(MAKECMDGOALS))
+	docker compose exec backend corepack pnpm $(filter-out $@,$(MAKECMDGOALS))
 
 api-logs:
 	docker compose logs -f backend
@@ -37,4 +37,4 @@ api-logs:
 database-logs:
 	docker compose logs -f database
 
-setup: create-env create-folders install-dependencies up-d ## run setup tasks
+setup: create-env build install-dependencies up-d ## run setup tasks
