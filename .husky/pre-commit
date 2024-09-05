@@ -1,1 +1,1 @@
-
+docker compose exec --user $(id -u):$(id -g) -T -e FORCE_COLOR=1 backend corepack pnpm dlx lint-staged

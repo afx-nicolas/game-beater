@@ -5,6 +5,8 @@
     "build": "tsc",
     "start": "tsx src/index.ts",
     "start:dev": "tsx watch src/index.ts",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
     "prepare": "husky",
     "commitlint": "commitlint --edit"
   },
@@ -23,6 +25,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "globals": "^15.9.0",
     "husky": "^9.1.5",
+    "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
     "tsx": "^4.7.1",
     "typescript": "^5.5.4",
