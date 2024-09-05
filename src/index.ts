@@ -7,9 +7,7 @@ app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
 
-const port = 3000;
-
 serve({
   fetch: app.fetch,
-  port,
+  port: process.env.API_PORT ?? 3000,
 });
