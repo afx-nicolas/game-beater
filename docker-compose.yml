@@ -11,6 +11,10 @@ services:
       - .env
     volumes:
       - database_data:/var/lib/postgresql/data:rw
+    networks:
+      app:
+        aliases:
+          - database
 
   backend:
     build:
@@ -27,5 +31,24 @@ services:
       - .:/app
     env_file:
       - .env
+    networks:
+      app:
+        aliases:
+          - backend
+
+  node: # This service it's only used to run git hooks
+    image: node:20
+    volumes:
+      - .:/app
+    working_dir: /app
+    networks:
+      app:
+        aliases:
+          - node
+
 volumes:
   database_data:
+
+networks:
+  app:
+    driver: bridge
