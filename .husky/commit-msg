@@ -1,1 +1,1 @@
-docker compose exec -T -e FORCE_COLOR=1 backend corepack pnpm dlx commitlint --edit $1
+docker compose run -T -e FORCE_COLOR=1 --rm backend corepack pnpm dlx commitlint --edit $1
