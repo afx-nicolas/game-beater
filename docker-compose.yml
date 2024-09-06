@@ -7,6 +7,7 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-gamebeater}
     ports:
       - ${DATABASE_PORT:-5432}:5432
+      - ${PRISMA_STUDIO_PORT:-5555}:5555
     env_file:
       - .env
     volumes:
@@ -19,6 +20,7 @@ services:
     depends_on:
       - database
     command: pnpm start:dev
+    user: "${UID}:${GID}"
     volumes:
       - .:/app
     env_file:
