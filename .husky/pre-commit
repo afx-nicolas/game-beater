@@ -1,1 +1,1 @@
-docker compose run --user $(id -u):$(id -g) -T -e FORCE_COLOR=1 --rm backend corepack pnpm dlx lint-staged
+docker compose run --user $(id -u):$(id -g) -T -e FORCE_COLOR=1 --rm backend pnpm lint-staged
