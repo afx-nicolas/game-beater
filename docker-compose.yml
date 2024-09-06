@@ -7,21 +7,22 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-gamebeater}
     ports:
       - ${DATABASE_PORT:-5432}:5432
-    user: "${UID}:${GID}"
     env_file:
       - .env
     volumes:
       - database_data:/var/lib/postgresql/data:rw
 
   backend:
-    build: .
+    build:
+      context: .
+      args:
+        - "UID=${UID:-1000}"
+        - "GID=${GID:-1000}"
     ports:
-      - '${API_PORT:-3000}:3000'
+      - ${API_PORT:-3000}:3000
       - ${PRISMA_STUDIO_PORT:-5555}:5555
     depends_on:
       - database
-    command: pnpm start:dev
-    user: "${UID}:${GID}"
     volumes:
       - .:/app
     env_file:

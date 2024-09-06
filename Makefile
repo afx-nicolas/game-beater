@@ -7,9 +7,6 @@ help: ## show this help
 
 all: help
 
-build: ## build containers
-	docker compose build
-
 start: ## start the containers
 	docker compose start
 
@@ -26,10 +23,13 @@ install-dependencies: ## install dependencies using pnpm
 	docker compose run --rm backend corepack pnpm install
 
 up-d: ## up the container and detach
+	docker compose up -d
+
+up-build-d: ## up the container, build, and detach
 	docker compose up --build -d
 
-pnpm: ## run pnpm e.g.: make pnpm "add -D eslint"
-	docker compose exec backend corepack pnpm $(filter-out $@,$(MAKECMDGOALS))
+prisma-studio: ## run prisma studio
+	docker compose exec backend corepack pnpm dlx prisma studio
 
 api-logs:
 	docker compose logs -f backend
@@ -37,4 +37,7 @@ api-logs:
 database-logs:
 	docker compose logs -f database
 
-setup: create-env build install-dependencies up-d ## run setup tasks
+ps: ## run docker compose ps
+	docker compose ps
+
+setup: create-env install-dependencies up-build-d ## run setup tasks
