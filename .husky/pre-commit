@@ -1,1 +1,1 @@
-docker compose run -T -e FORCE_COLOR=1 --rm node corepack pnpm dlx lint-staged
+docker compose run -T -e FORCE_COLOR=1 --rm node corepack pnpm lint-staged

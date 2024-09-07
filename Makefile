@@ -4,7 +4,7 @@ SHELL=/bin/bash
 PODMAN_EXISTS := $(shell command -v podman 2> /dev/null)
 
 ifeq ($(if $(PODMAN_EXISTS),1),1)
-  RUNTIME := docker-compose
+  RUNTIME := podman-compose
 else
 	RUNTIME := docker-compose
 endif
@@ -28,7 +28,7 @@ create-env: ## copy the example env file
 	cp .env.example .env
 
 install-dependencies: ## install dependencies using pnpm
-	$(RUNTIME) run --rm backend corepack pnpm install
+	$(RUNTIME) run --rm node corepack pnpm install
 
 up-d: ## up the container and detach
 	$(RUNTIME) up -d
@@ -37,7 +37,7 @@ up-build-d: ## up the container, build, and detach
 	$(RUNTIME) up --build -d
 
 prisma-studio: ## run prisma studio
-	$(RUNTIME) run backend corepack pnpm dlx prisma studio
+	$(RUNTIME) exec -e FORCE_COLOR=1 backend corepack pnpm dlx prisma studio
 
 api-logs:
 	$(RUNTIME) logs -f backend

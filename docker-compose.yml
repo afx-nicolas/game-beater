@@ -11,17 +11,10 @@ services:
       - .env
     volumes:
       - database_data:/var/lib/postgresql/data:rw
-    networks:
-      app:
-        aliases:
-          - database
 
   backend:
     build:
       context: .
-      args:
-        - "UID=${UID:-1000}"
-        - "GID=${GID:-1000}"
     ports:
       - ${API_PORT:-3000}:3000
       - ${PRISMA_STUDIO_PORT:-5555}:5555
@@ -31,24 +24,13 @@ services:
       - .:/app
     env_file:
       - .env
-    networks:
-      app:
-        aliases:
-          - backend
+    command: corepack pnpm start:dev
 
   node: # This service it's only used to run git hooks
-    image: node:20
+    build:
+      context: .
     volumes:
       - .:/app
-    working_dir: /app
-    networks:
-      app:
-        aliases:
-          - node
 
 volumes:
   database_data:
-
-networks:
-  app:
-    driver: bridge
