@@ -24,9 +24,9 @@ services:
       - .:/app
     env_file:
       - .env
-    command: corepack pnpm start:dev
+    command: bun start:dev
 
-  node: # This service it's only used to run git hooks
+  bun: # This service it's only used to run git hooks
     build:
       context: .
     volumes:

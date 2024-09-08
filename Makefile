@@ -1,5 +1,5 @@
 SHELL=/bin/bash
-.PHONY: pnpm
+.PHONY: bun
 
 PODMAN_EXISTS := $(shell command -v podman 2> /dev/null)
 
@@ -27,8 +27,8 @@ down: ## down the containers
 create-env: ## copy the example env file
 	cp .env.example .env
 
-install-dependencies: ## install dependencies using pnpm
-	$(RUNTIME) run --rm node corepack pnpm install
+install-dependencies: ## install dependencies using bun
+	$(RUNTIME) run --rm bun bun install
 
 up-d: ## up the container and detach
 	$(RUNTIME) up -d
@@ -37,7 +37,7 @@ up-build-d: ## up the container, build, and detach
 	$(RUNTIME) up --build -d
 
 prisma-studio: ## run prisma studio
-	$(RUNTIME) exec -e FORCE_COLOR=1 backend corepack pnpm dlx prisma studio
+	$(RUNTIME) exec -e FORCE_COLOR=1 backend bunx prisma studio
 
 api-logs:
 	$(RUNTIME) logs -f backend
